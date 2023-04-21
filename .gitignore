@@ -90,4 +90,8 @@ target/
 # Mypy cache
 .mypy_cache/
 
-.demand-estimation
+/demand-estimation/Include
+/demand-estimation/Lib
+/demand-estimation/Scripts
+/demand-estimation/share
+/demand-estimation/pyvenv.cfg
