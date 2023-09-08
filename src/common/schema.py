@@ -58,6 +58,11 @@ class geoLookupSchema:
   ladcd = "ladcd"
   ladnm = "ladnm"
 
+class ukercSchema:
+  lsoa = "LSOA11CD"
+  ladnm = "Local authority (2011)"
+  road_length = 'Road length (m)'
+  area = 'Area (km2)'
 
 class geoLookupScotSchema: 
   """Schema for Scotland geocodes"""

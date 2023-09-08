@@ -486,12 +486,13 @@ def extract_epc_data_for_la(target_la: str,
 
 
 def add_road_length(dataf):
-  road_df = pd.read_csv(PATH_AREA_ROAD_LENGTH)
-  road_df.rename(columns={'LENGTH': 'Road length (m)'}, inplace=True)
-  road_df['Road length (m)'].fillna(-1, inplace=True)
+  road_df = pd.read_csv(PATH_AREA_ROAD_LENGTH).drop_duplicates()
+  road_df.rename(columns={'LENGTH': schema.ukercSchema.road_length},
+                 inplace=True)
+  road_df[schema.ukercSchema.road_length].fillna(-1, inplace=True)
 
   dataf = pd.merge(dataf,
-                   road_df[["DataZone", 'Road length (m)']],
+                   road_df[["DataZone", schema.ukercSchema.road_length]],
                    left_on=schema.skeletonSchema.lsoa,
                    right_on="DataZone",
                    how='left')
@@ -500,13 +501,13 @@ def add_road_length(dataf):
 
 
 def add_area_LSOA(dataf):
-  area_df = pd.read_csv(PATH_AREA_ROAD_LENGTH)
-  area_df['Area (km2)'] = area_df["Shape_Area"] / 1000000
+  area_df = pd.read_csv(PATH_AREA_ROAD_LENGTH).drop_duplicates()
+  area_df[schema.ukercSchema.area] = area_df["Shape_Area"] / 1000000
   dataf = pd.merge(dataf,
-                   area_df[["DataZone", 'Area (km2)']],
+                   area_df[["DataZone", schema.ukercSchema.area]],
                    left_on=schema.skeletonSchema.lsoa,
                    right_on="DataZone",
                    how='left')
-  dataf['Area (km2)'].fillna(-1, inplace=True)
+  dataf[schema.ukercSchema.area].fillna(-1, inplace=True)
   dataf.drop('DataZone', axis=1, inplace=True)
   return dataf
